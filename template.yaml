@@ -9,12 +9,20 @@ Resources:
       Runtime: java8
       Handler: com.home.amazon.iot.lamnda.GreenGrassHWFunction::handleRequest
       Timeout: 3
-      MemorySize: 64
+      MemorySize: 128
       CodeUri: .
       AutoPublishAlias: Greengrass
-      # Attach policies here to give the function permission to access other AWS resources if needed
-      # See: https://github.com/awslabs/serverless-application-model/blob/master/docs/policy_templates.rst
-      # eg:
-      #Policies:
-      # - S3ReadPolicy:
-      #     BucketName: test-bucket
+
+  CollectDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: java8
+      Handler: com.home.amazon.iot.lamnda.CollectDataFunction::handleRequest
+      Timeout: 3
+      MemorySize: 128
+      CodeUri: .
+      AutoPublishAlias: Greengrass
+      Environment:
+        Variables:
+          SendDataTask_path: /test
+          SendDataTask_topic: greengrass/java/data
