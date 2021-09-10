@@ -60,6 +60,7 @@ public class SendDataTask extends TimerTask {
         for (Path path : files) {
             System.out.println("Found file:" + path.getFileName());
             Book book = yamlMapper.readValue(path.toFile(), Book.class);
+            data.add(book);
         }
         String json = jsonMapper.writeValueAsString(data);
         System.out.println("Built JSON for message: " + json);
