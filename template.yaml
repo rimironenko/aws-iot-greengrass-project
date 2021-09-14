@@ -26,3 +26,13 @@ Resources:
         Variables:
           SendDataTask_path: /test
           SendDataTask_topic: greengrass/java/data
+
+  SubscribeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: java8
+      Handler: com.home.amazon.iot.lamnda.SubscribeFunction::handleRequest
+      Timeout: 3
+      MemorySize: 128
+      CodeUri: .
+      AutoPublishAlias: Greengrass
