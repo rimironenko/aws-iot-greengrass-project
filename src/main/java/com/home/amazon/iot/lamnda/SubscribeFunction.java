@@ -23,10 +23,8 @@ public class SubscribeFunction implements RequestHandler<Map<String, String>, St
                 String message = input.get("message");
                 String fileName = "test-" + System.currentTimeMillis();
                 Path tempFile = Files.createTempFile(fileName, ".yaml");
-                System.out.println("Created temp file: " + tempFile);
                 Files.write(tempFile, message.getBytes());
                 Item item = YAML_MAPPER.readValue(tempFile.toFile(), Item.class);
-                System.out.println(item);
                 String json = JSON_MAPPER.writeValueAsString(item);
                 System.out.println("Converted to JSON: " + json);
             } catch (IOException e) {
