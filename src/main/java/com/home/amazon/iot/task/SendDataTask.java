@@ -7,7 +7,7 @@ import com.amazonaws.greengrass.javasdk.model.PublishRequest;
 import com.amazonaws.greengrass.javasdk.model.QueueFullPolicy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.home.amazon.iot.model.Book;
+import com.home.amazon.iot.model.Item;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -56,11 +56,11 @@ public class SendDataTask extends TimerTask {
     }
 
     private String transformFileDataToJson(Set<Path> files) throws IOException {
-        Set<Book> data = new HashSet<>();
+        Set<Item> data = new HashSet<>();
         for (Path path : files) {
             System.out.println("Found file:" + path.getFileName());
-            Book book = yamlMapper.readValue(path.toFile(), Book.class);
-            data.add(book);
+            Item item = yamlMapper.readValue(path.toFile(), Item.class);
+            data.add(item);
         }
         String json = jsonMapper.writeValueAsString(data);
         System.out.println("Built JSON for message: " + json);

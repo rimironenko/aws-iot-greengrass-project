@@ -4,7 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.home.amazon.iot.model.Book;
+import com.home.amazon.iot.model.Item;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,9 +25,9 @@ public class SubscribeFunction implements RequestHandler<Map<String, String>, St
                 Path tempFile = Files.createTempFile(fileName, ".yaml");
                 System.out.println("Created temp file: " + tempFile);
                 Files.write(tempFile, message.getBytes());
-                Book book = YAML_MAPPER.readValue(tempFile.toFile(), Book.class);
-                System.out.println(book);
-                String json = JSON_MAPPER.writeValueAsString(book);
+                Item item = YAML_MAPPER.readValue(tempFile.toFile(), Item.class);
+                System.out.println(item);
+                String json = JSON_MAPPER.writeValueAsString(item);
                 System.out.println("Converted to JSON: " + json);
             } catch (IOException e) {
                 System.out.println("Failed to save message: " + e);
