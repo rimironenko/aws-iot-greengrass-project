@@ -1,5 +1,5 @@
 #!/bin/bash
-python3 publishMessageFromDevice.py \
+python3 sendMessage.py \
         --endpoint ENDPOINT \
         --rootCA AmazonRootCA1.pem \
         --cert HASH.cert.pem \
