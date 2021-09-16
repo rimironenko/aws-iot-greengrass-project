@@ -11,3 +11,12 @@ Resources:
       MemorySize: 128
       CodeUri: .
       AutoPublishAlias: Greengrass
+      Policies:
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt MessageQueue.QueueName
+      Environment:
+        Variables:
+          QueueUrl: !Ref MessageQueue
+
+  MessageQueue:
+    Type: AWS::SQS::Queue
