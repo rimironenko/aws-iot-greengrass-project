@@ -140,11 +140,16 @@ if not connected:
     sys.exit(-2)
 
 
-message = {}
-file = open(args.file)
-fileContent = file.read()
-file.close()
-message['message'] = fileContent
-messageJson = json.dumps(message)
-myAWSIoTMQTTClient.publish(topic, messageJson, 0)
-print('Published topic %s: %s\n' % (topic, messageJson))
+loopCount = 0
+while True:
+    message = {}
+    file = open(args.file)
+    fileContent = file.read()
+    file.close()
+    message['message'] = fileContent
+    message['sequence'] = loopCount
+    messageJson = json.dumps(message)
+    myAWSIoTMQTTClient.publish(topic, messageJson, 0)
+    print('Published topic %s: %s\n' % (topic, messageJson))
+    loopCount += 1
+    time.sleep(15)
