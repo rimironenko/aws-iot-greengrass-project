@@ -1,7 +1,7 @@
 # aws-iot-greengrass-project
 
-It is a simple application built with AWS SAM that contains the Lambda function to be built and deployed tp an AWS IoT Greengrass Core device.
-The function consumes String messages from device with content ofa YANL file, transforms it to JSON directly on the Core device and sends to a SQS queue.
+It is a simple application built with AWS SAM that contains the Lambda function to be built and deployed to an AWS IoT Greengrass Core device.
+The function consumes String messages from device with content of a YAML file, transforms it to JSON directly on the Core device and sends to a SQS queue.
 
 ## Prerequisites
 - Java 1.8+
@@ -19,7 +19,7 @@ The function consumes String messages from device with content ofa YANL file, tr
 
 ## Development
 
-The generated function handler class just returns the input. The configured AWS Java SDK client is created in `DependencyFactory` class and you can 
+The generated function handler class just returns the input. The configured AWS Java SDK client is created in `DependencyFactory` class, and you can 
 add the code to interact with the SDK client based on your use case.
 
 #### Building the project
