@@ -19,14 +19,14 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SubscribeFunctionTest {
 
     private static final String TEST_QUEUE_URL = "https://test-queue.us-east-1.amazonaws.com";
     private static final String TEST_MESSAGE_ID = "ab-1";
+    private static final String EXCEPTION_MESSAGE = "Exception";
 
     @Mock
     private SqsClient sqsClient;
@@ -49,6 +49,34 @@ public class SubscribeFunctionTest {
             SubscribeFunction subscribeFunction = new SubscribeFunction();
             String actualResponse = subscribeFunction.handleRequest(testEvent, context);
             assertEquals(String.format(SubscribeFunction.LAMBDA_RESPONSE_TEMPLATE, TEST_MESSAGE_ID), actualResponse);
+        }
+    }
+
+    @Test
+    public void shouldReturnErrorMessageWhenIOExceptionOccurs() throws IOException {
+        Map<String, String> testEvent = new HashMap<>();
+        testEvent.put(SubscribeFunction.MESSAGE_KEY, new String(Files.readAllBytes(Paths.get("src/test/resources/test.yaml"))));
+        try (MockedStatic<DependencyFactory> mockedStatic = mockStatic(DependencyFactory.class)) {
+            when(DependencyFactory.sqsClient()).thenReturn(sqsClient);
+            when(DependencyFactory.sqsQueryUrl()).thenReturn(TEST_QUEUE_URL);
+            SubscribeFunction subscribeFunction = new SubscribeFunction();
+            try (MockedStatic<Files> files = mockStatic(Files.class)) {
+                when(Files.createTempFile(anyString(), anyString())).thenThrow(new IOException(EXCEPTION_MESSAGE));
+                String response = subscribeFunction.handleRequest(testEvent, context);
+                assertEquals(String.format(SubscribeFunction.LAMBDA_RESPONSE_ERROR_TEMPLATE, EXCEPTION_MESSAGE), response);
+            }
+
+        }
+    }
+
+    @Test
+    public void shouldReturnMessageWithNullIfNoMessage() {
+        try (MockedStatic<DependencyFactory> mockedStatic = mockStatic(DependencyFactory.class)) {
+            when(DependencyFactory.sqsClient()).thenReturn(sqsClient);
+            when(DependencyFactory.sqsQueryUrl()).thenReturn(TEST_QUEUE_URL);
+            SubscribeFunction subscribeFunction = new SubscribeFunction();
+            String response = subscribeFunction.handleRequest(new HashMap<>(), context);
+            assertEquals(String.format(SubscribeFunction.LAMBDA_RESPONSE_TEMPLATE, (String) null), response);
         }
     }
 
