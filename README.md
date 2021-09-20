@@ -1,12 +1,21 @@
-# App
+# aws-iot-greengrass-project
 
-This project contains an AWS Lambda maven application with [AWS Java SDK 2.x](https://github.com/aws/aws-sdk-java-v2) dependencies.
+It is a simple application built with AWS SAM that contains the Lambda function to be built and deployed tp an AWS IoT Greengrass Core device.
+The function consumes String messages from device with content ofa YANL file, transforms it to JSON directly on the Core device and sends to a SQS queue.
 
 ## Prerequisites
 - Java 1.8+
 - Apache Maven
 - [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 - Docker
+
+## Project structure
+- [ec2-greengrass-core-setup.sh](scripts/ec2-greengrass-core-setup.sh) - The User Data script for AWS EC2 instance to install the Greengrass Software and configure the instance as the Greengrass Core device.
+- [ec2-greengrass-device-setup.sh](scripts/ec2-greengrass-device-setup.sh) - The User Data script for AWS EC2 instance to configure it as a Greengrass device and install the Greengrass Python SDK to run Python scripts that can interact with Greengrass.
+- [sendMessage.py](scripts/sendMessage.py) - Python3 script to publish a test message from the device to the Core device via MQTT.
+- [sendMessage.sh](scripts/sendMessage.sh) - Bash script to trigger the Python script and send the message instead of inputting into the CLI.
+- [template.yaml](template.yaml) - AWS SAM template.
+- [SubscribeFunction.java](src/main/java/com/home/amazon/iot/lamnda/SubscribeFunction.java) - The Lambda function for the edge computing on the Core device.
 
 ## Development
 
@@ -15,7 +24,7 @@ add the code to interact with the SDK client based on your use case.
 
 #### Building the project
 ```
-mvn clean install
+sam build
 ```
 
 #### Testing it locally
@@ -25,7 +34,7 @@ sam local invoke
 
 #### Adding more SDK clients
 To add more service clients, you need to add the specific services modules in `pom.xml` and create the clients in `DependencyFactory` following the same 
-pattern as s3Client.
+pattern as sqsClient.
 
 ## Deployment
 
