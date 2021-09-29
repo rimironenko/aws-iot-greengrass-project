@@ -6,4 +6,4 @@ python3 sendMessage.py \
         --key HASH.private.key \
         --thingName THING_NAME \
         --topic TOPIC \
-         --file FILE
+        --file FILE
