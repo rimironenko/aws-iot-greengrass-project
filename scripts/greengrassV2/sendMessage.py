@@ -17,15 +17,12 @@ parser.add_argument('-c', '--cert', action='store', required=True, dest='certifi
 parser.add_argument('-k', '--key', action='store', required=True, dest='private_key_path', help='Private key file path')
 parser.add_argument('-n', '--thing-name', action='store', required=True, dest='thing_name', help='Targeted thing name')
 parser.add_argument('-t', '--topic', action='store', dest='topic', default='test/topic', help='Targeted topic')
-parser.add_argument('-m', '--mode', action='store', dest='mode', default='both',
-                    help='Operation modes: %s'%str(allowed_actions))
-parser.add_argument('-M', '--message', action='store', dest='message', default='Hello World!',
-                    help='Message to publish')
 parser.add_argument('--region', action='store', dest='region', default='us-east-1')
 parser.add_argument('--max-pub-ops', action='store', dest='max_pub_ops', default=10)
 parser.add_argument('--print-discover-resp-only', action='store_true', dest='print_discover_resp_only', default=False)
 parser.add_argument('-v', '--verbosity', choices=[x.name for x in LogLevel], default=LogLevel.NoLogs.name,
                     help='Logging level')
+parser.add_argument("-f", "--file", action="store", dest="file", default="test.yaml", help="File to send content to topic")
 
 args = parser.parse_args()
 
@@ -93,25 +90,14 @@ def try_iot_endpoints():
 
 mqtt_connection = try_iot_endpoints()
 
-if args.mode == 'both' or args.mode == 'subscribe':
 
-    def on_publish(topic, payload, dup, qos, retain, **kwargs):
-        print('Publish received on topic {}'.format(topic))
-        print(payload)
-
-    subscribe_future, _ = mqtt_connection.subscribe(args.topic, QoS.AT_MOST_ONCE, on_publish)
-    subscribe_result = subscribe_future.result()
-
-loop_count = 0
-while loop_count < args.max_pub_ops:
-    if args.mode == 'both' or args.mode == 'publish':
-        message = {}
-        message['message'] = args.message
-        message['sequence'] = loop_count
-        messageJson = json.dumps(message)
-        pub_future, _ = mqtt_connection.publish(args.topic, messageJson, QoS.AT_MOST_ONCE)
-        pub_future.result()
-        print('Published topic {}: {}\n'.format(args.topic, messageJson))
-
-        loop_count += 1
-    time.sleep(1)
+message = {}
+file = open(args.file)
+fileContent = file.read()
+file.close()
+message['message'] = fileContent
+messageJson = json.dumps(message)
+pub_future, _ = mqtt_connection.publish(args.topic, messageJson, QoS.AT_MOST_ONCE)
+pub_future.result()
+print('Published topic {}: {}\n'.format(args.topic, messageJson))
+time.sleep(15)
