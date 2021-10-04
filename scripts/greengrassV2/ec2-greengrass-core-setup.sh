@@ -20,7 +20,7 @@ unzip greengrass-nucleus-latest.zip -d GreengrassInstaller && rm greengrass-nucl
 # Create a Greengrass Core device
 export AWS_ACCESS_KEY_ID=ACCESS_KEY
 export AWS_SECRET_ACCESS_KEY=SECRET_ACCCESS_KEY
--E java -Droot="/greengrass/v2" -Dlog.store=FILE \
+java -Droot="/greengrass/v2" -Dlog.store=FILE \
   -jar ./GreengrassInstaller/lib/Greengrass.jar \
   --aws-region us-east-1 \
   --thing-name MySecondGroup_Core \
