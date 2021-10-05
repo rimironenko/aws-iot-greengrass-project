@@ -3,6 +3,7 @@ package com.home.amazon.iot.lamnda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.home.amazon.iot.model.Item;
 import com.home.amazon.iot.util.DependencyFactory;
@@ -10,7 +11,6 @@ import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 import software.amazon.awssdk.services.sqs.model.SendMessageResponse;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
@@ -50,8 +50,9 @@ public class SubscribeFunction implements RequestHandler<Map<String, String>, St
                 String json = jsonMapper.writeValueAsString(item);
                 System.out.println("Converted to JSON: " + json);
                 response = sendSqsMessage(json);
-            } catch (IOException e) {
-                System.out.println("Failed to save message: " + e);
+                System.out.println("Sent SQS message with id: " + response);
+            } catch (Exception e) {
+                System.out.println("Failed to send SQS message: " + e);
                 return String.format(LAMBDA_RESPONSE_ERROR_TEMPLATE, e.getMessage());
             }
         }

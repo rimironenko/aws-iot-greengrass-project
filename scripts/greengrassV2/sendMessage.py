@@ -97,7 +97,7 @@ fileContent = file.read()
 file.close()
 message['message'] = fileContent
 messageJson = json.dumps(message)
-pub_future, _ = mqtt_connection.publish(args.topic, messageJson, QoS.AT_MOST_ONCE)
+pub_future, _ = mqtt_connection.publish(args.topic, messageJson, QoS.AT_LEAST_ONCE)
 pub_future.result()
 print('Published topic {}: {}\n'.format(args.topic, messageJson))
 time.sleep(5)
