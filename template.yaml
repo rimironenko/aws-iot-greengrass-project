@@ -20,3 +20,18 @@ Resources:
 
   MessageQueue:
     Type: AWS::SQS::Queue
+
+  MessageQueuePolicy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      Queues:
+        - !Ref MessageQueue
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 'SQS:SendMessage'
+            Effect: 'Allow'
+            Resource: !GetAtt MessageQueue.Arn
+            Principal:
+              AWS:
+                - !Ref AWS::AccountId
