@@ -1,9 +1,10 @@
+#!/bin/bash
 python3 sendMessage.py \
-  --thing-name THING_NAME \
-  --topic TOPIC \
-  --file FILE \
+  --thing-name PublisherDevice \
+  --topic greengrass/v2/message \
+  --file test.yaml \
   --root-ca root.ca.pem \
   --cert device.pem.crt \
   --key private.pem.key \
-  --region REGION \
+  --region us-east-1 \
   --verbosity Warn
