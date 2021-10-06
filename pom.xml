@@ -39,13 +39,6 @@
             <version>${aws.lambda.java.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.home.amazon.iot</groupId>
-            <artifactId>greengrass-java-sdk</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/GreengrassJavaSDK-Slim.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
