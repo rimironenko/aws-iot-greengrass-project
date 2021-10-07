@@ -3,7 +3,6 @@ package com.home.amazon.iot.lamnda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.home.amazon.iot.model.Item;
 import com.home.amazon.iot.util.DependencyFactory;

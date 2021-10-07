@@ -10,10 +10,13 @@ The function consumes String messages from device with content of a YAML file, t
 - Docker
 
 ## Project structure
-- [ec2-greengrass-core-setup.sh](scripts/ec2-greengrass-core-setup.sh) - The User Data script for AWS EC2 instance to install the Greengrass Software and configure the instance as the Greengrass Core device.
-- [ec2-greengrass-device-setup.sh](scripts/ec2-greengrass-device-setup.sh) - The User Data script for AWS EC2 instance to configure it as a Greengrass device and install the Greengrass Python SDK to run Python scripts that can interact with Greengrass.
-- [sendMessage.py](scripts/sendMessage.py) - Python3 script to publish a test message from the device to the Core device via MQTT.
-- [sendMessage.sh](scripts/sendMessage.sh) - Bash script to trigger the Python script and send the message instead of inputting into the CLI.
+- [greengrassV1/ec2-greengrass-core-setup.sh](scripts/greengrassV1/ec2-greengrass-core-setup.sh) - The User Data script for AWS EC2 instance to install the Greengrass Software and configure the instance as the Greengrass Core device (Greengrass version 1).
+- [greengrassV1/ec2-greengrass-device-setup.sh](scripts/greengrassV1/ec2-greengrass-device-setup.sh) - The User Data script for AWS EC2 instance to configure it as a Greengrass device and install the Greengrass V1 Python SDK to run Python scripts that can interact with Greengrass version 1.
+- [greengrassV1/sendMessage.py](scripts/greengrassV1/sendMessage.py) - Python3 script to publish a test message from the device to the Core device via MQTT using SDK version 1.
+- [greengrassV1/sendMessage.sh](scripts/greengrassV1/sendMessage.sh) - Bash script to trigger the Python script and send the message using SDK version 1 instead of inputting into the CLI.
+- [greengrassV2/ec2-greengrass-core-device-setup.sh](scripts/greengrassV2/ec2-greengrass-core-device-setup.sh) - The User Data script for AWS EC2 instance to install the Greengrass Software, configure the instance as the Greengrass Core device (Greengrass version 2) and install the Greengrass V2 Python SDK to run Python scripts that can interact with Greengrass version 2.
+- [greengrassV2/sendMessage.py](scripts/greengrassV2/sendMessage.py) - Python3 script to publish a test message from the device to the Core device via MQTT using SDK version 2.
+- [greengrassV2/sendMessage.sh](scripts/greengrassV2/sendMessage.sh) - Bash script to trigger the Python script and send the message using SDK version 2 instead of inputting into the CLI.
 - [template.yaml](template.yaml) - AWS SAM template.
 - [SubscribeFunction.java](src/main/java/com/home/amazon/iot/lamnda/SubscribeFunction.java) - The Lambda function for the edge computing on the Core device.
 
