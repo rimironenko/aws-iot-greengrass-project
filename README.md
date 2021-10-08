@@ -1,7 +1,12 @@
 # aws-iot-greengrass-project
 
 It is a simple application built with AWS SAM that contains the Lambda function to be built and deployed to an AWS IoT Greengrass Core device.
-The function consumes String messages from device with content of a YAML file, transforms it to JSON directly on the Core device and sends to a SQS queue. Please see the detailed explanation of the applicaton in the [Medium blog post](https://medium.com/@rostyslav.myronenko/aws-edge-computing-example-with-lambda-and-iot-greengrass-version-1-6bb710249d9a).
+The function consumes String messages from device with content of a YAML file, transforms it to JSON directly on the Core device and sends to a SQS queue.
+The architecture is described in the picture given below.
+![Architecture](assets/Greengrass.png)
+
+
+Please see the detailed explanation of the application in the [Medium blog post for Greengrass version 1](https://medium.com/@rostyslav.myronenko/aws-edge-computing-example-with-lambda-and-iot-greengrass-version-1-6bb710249d9a) and [Medium blog post for Greengrass version 2](https://medium.com/@rostyslav.myronenko/aws-edge-computing-example-with-lambda-and-iot-greengrass-version-2-aa68f2cc246).
 
 ## Prerequisites
 - Java 1.8+
