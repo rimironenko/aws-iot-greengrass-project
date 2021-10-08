@@ -2,7 +2,10 @@
 
 It is a simple application built with AWS SAM that contains the Lambda function to be built and deployed to an AWS IoT Greengrass Core device.
 The function consumes String messages from device with content of a YAML file, transforms it to JSON directly on the Core device and sends to a SQS queue.
+
 The architecture is described in the picture given below.
+
+
 ![Architecture](assets/Greengrass.png)
 
 
